@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include "header.hpp"
+
+using namespace std;
+
+
+int main (int argc, char* argv[]){
+
+	if (argc !=6) {	// an den exei dwthei to swsto plithos orismatwn na mhn treksei to programma gia apofugh segmentation fault
+		cout << "Error! Missing arguments!" << endl;
+		return -1;
+	}
+	
+	int x, i, L1, L2, L3, N, K;
+	Type type;
+
+	L1 = atoi(argv[1]);
+	L2 = atoi(argv[2]);
+	L3 = atoi(argv[3]);
+	N = atoi(argv[4]);
+	K = atoi(argv[5]);
+	
+	// prepei austira L1 > L2 > L3
+
+	if (L1 <= L2 || L1 <= L3) {
+		cout << "Error in argument argv[1]!" << endl ;
+		return 1 ;
+	}
+	if (L2 <= L3){
+		cout << "Error in argument argv[2]!" << endl ;
+		return 2 ;
+	}
+		
+	Ballholder b(N,L1,L2,L3);
+
+	srand(time(NULL));
+	
+	cout << "--------------------------------------------------------------------------------------" << endl;
+	for (i=0;i<K;i++){		// Gia K fores 
+		x = b.hit_a_ball();	// mia mpala xtupietai tuxaia
+		b.rest_the_others(x);	// kai oi upoloipes kanoun rest	
+		cout << "--------------------------------------------------------------------------------------" << endl;
+	}
+	
+	type = b.perissoteres_kales();	// sti sunexeua kalw ti sunartisi "perissoteres_kales" h opoia gurizei ton tupo tis mpalas,
+	// o opoios exei tis perissoteres mh ftharmenes, mi spasmenes kai mi eksafanismenes mpales
+
+
+	// analoga me ton tupo epistrofis tis sunartisis, dialegw paixnidi
+	if (type == TENNIS) cout << "We will play tennis" << endl;
+	else if (type == BASKETBALL) cout << "We will play basketball" << endl;
+	else cout << "We will play pingpong" << endl << endl;
+
+	return 0;
+}

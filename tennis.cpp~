@@ -1,0 +1,47 @@
+#include <iostream>
+#include <cstdlib>
+#include "header.hpp"
+
+using namespace std;
+
+
+
+Tennis::Tennis(int L2):Ball(L2){}	// h mpala tennis , einai mia mpala me durability L2
+Tennis::~Tennis(){}
+
+Type Tennis::get_type(){		// gurizei ton typo tis mpalas
+	return TENNIS;
+}
+
+void Tennis::hit(){
+	int x;
+
+	cout << "Trying to hit a Tennis' ball" << endl;	//de zhtatai. gia na kseroume se kathe epanalipsi
+	// ti tupou mpala xtupame. gia logous katanoisis tis leitourgias tou programmatos
+	if (state == MISSING){// an i mpala exei xathei simainei oti exei vgei apo to paixnidi
+		cout << "You cannot hit a hidden ball!" << endl;
+		return;// ara de mporw na ti xtupisw kai den ekteleitai kamia alli leitourgia
+	}
+	if (state == FTHARMENI){	
+		cout << "Plof!" << endl;// an i mpala einai ftharmeni
+		return;// ektupwnw plof alla frontizw na mi meiwsw to durability gt einai hdh mhden
+	}
+	cout << "Tsaf!" << endl;// an den isxuei tipota apo ta parapanw, ektupwnw tsaf, dld oti xtupithike i mpala
+	durability-=5;	// kai meiwnw kata pente to durability
+	if (durability <= 0) state = FTHARMENI; // an to durability einai mh thetiko(mporei na einai kai arnitiko gt me kathe hit aferw 5)
+	// tote i mpala einai ftharmeni
+	x = rand() % 10;
+	if (x==7) state = MISSING;// tuxaia mia mpala,  meta apo ena xtupima mporei na eksafanistei
+}
+
+void Tennis::rest(){
+	if (state!=MISSING && state!= BROKEN){// an mia mpala den einai spasmeni oute xameni, dld uparxei akoma sto paixnidi
+		durability+=3;// auksanw kata tria to durability logw peripoihshs perivlimatos
+		if (state == FTHARMENI && durability > 0) state = OK; // an prin to rest i mpala htan ftharmeni kai meta to rest durability>0
+		// tote i mpala exei state ok
+		// paradeigma: an prin to hit to durability htan 1 to kainourgio durability tha einai -4 kai h mpala ftharmeni
+		// meta to rest to durability tha ginei -1, ara tha einai pali ftharmeni
+	}
+}
+
+

@@ -1,0 +1,80 @@
+#ifndef _HEADER__HPP_
+#define _HEADER__HPP_
+
+enum State{OK=0, FTHARMENI, MISSING, BROKEN};	// h katastasi tis mpalas
+// OK: mh ftharmeni, mh spasmenh kai mh xamenh->i arxiki katastasi tis mpalas kai i katastasi pou tha paiksei rolo stin epilogi paixnidiou
+// tha anaferomai stis mpales pou exoun state ok ws "kales"
+// FTHARMENI: i katastasi gia durability==0
+// MISSING: an meta to hit i mpala xathei
+// BROKEN: gia spasmeni mpala->afora mono mpales pingpong
+// kathe mpala mporei na exei mono mia katastasi ti fora
+// an i katastasi einai ok, eksorismou tis ok de mporei na einai tipota allo
+// an einai ftharmeni, de mporei na einai spasmeni gt paizei akoma sto paixnidi mia fthameni mpala kai mporei na kanei rest
+// an state einai missing, i mpala feugei apo to paixnidi, ara de mas endiaferei to durability(ftharmenh h mh) oute an einai spasmeni
+// an state einai broken(mono gia pingpong), de mas endiaferei kamia alli katastasi dioti i mpala feugei apo to paixnidi
+enum Type{TENNIS=0,BASKETBALL,PINGPONG};	// typos tis mpalas
+
+class Ball{
+
+	protected:
+		int durability;
+		State state; 
+
+	public:
+		Ball(int);
+		~Ball();
+		virtual void hit();
+		virtual void rest();
+		virtual Type get_type();
+		State get_state();
+};
+
+
+class Tennis: public Ball{
+
+	public:
+		Tennis(int);
+		~Tennis();
+		void hit();
+		void rest();
+		Type get_type();
+};
+
+
+
+class Basketball: public Ball{
+
+	public:
+		Basketball(int);
+		~Basketball();
+		void hit();
+		void rest();
+		Type get_type();
+};
+
+
+class Pingpong: public Ball{
+
+	public:
+		Pingpong(int);
+		~Pingpong();
+		void hit();
+		void rest();
+		Type get_type();
+};
+
+class Ballholder{
+
+	private:
+		Ball** pinakas;
+		int n, tennis_ok, basketball_ok, pingpong_ok;
+
+	public:
+		Ballholder(int,int,int,int);
+		~Ballholder();
+		int hit_a_ball();
+		void rest_the_others(int);
+		Type perissoteres_kales();
+};
+
+#endif
